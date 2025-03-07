@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const menuToggle = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
@@ -20,31 +21,33 @@ document.addEventListener("DOMContentLoaded", function () {
             displayCourses(courses);
         })
         .catch(error => console.error("Error loading courses:", error));
+
     function displayCourses(filteredCourses, highlightText = "") {
         courseTableBody.innerHTML = "";
         filteredCourses.forEach(course => {
             let row = document.createElement("tr");
             row.innerHTML = `
-                <td>${highlightMatch(course.year_level, highlightText)}</td>
-                <td>${highlightMatch(course.sem, highlightText)}</td>
-                <td>${highlightMatch(course.code, highlightText)}</td>
-                <td>${highlightMatch(course.description, highlightText)}</td>
-                <td>${highlightMatch(course.credit, highlightText)}</td>
+                <td>${course.year_level}</td>
+                <td>${course.sem}</td>
+                <td>${course.code}</td>
+                <td>${highlightMatch(course.description, highlightText)}</td> <!-- Highlight only in description -->
+                <td>${course.credit}</td>
             `;
             courseTableBody.appendChild(row);
         });
     }
+        
 
     function highlightMatch(text, searchText) {
-        if (!searchText) return text; // Return original text if no search
+        if (!searchText) return text;
         const regex = new RegExp(`(${searchText})`, "gi");
-        return text.replace(regex, '<span class="highlight">$1</span>'); // Wrap match in span
+        return text.replace(regex, '<span class="highlight">$1</span>');
     }
 
     searchBar.addEventListener("input", function () {
         const searchText = searchBar.value.toLowerCase();
         const filteredCourses = courses.filter(course =>
-            course.description.toLowerCase().includes(searchText) ||
+            course.description.toLowerCase().includes(searchText) // Only filter by description
         );
         displayCourses(filteredCourses, searchText);
     });
