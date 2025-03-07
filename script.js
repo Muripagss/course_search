@@ -44,11 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     searchBar.addEventListener("input", function () {
         const searchText = searchBar.value.toLowerCase();
         const filteredCourses = courses.filter(course =>
-            course.year_level.toLowerCase().includes(searchText) ||
-            course.sem.toLowerCase().includes(searchText) ||
-            course.code.toLowerCase().includes(searchText) ||
             course.description.toLowerCase().includes(searchText) ||
-            course.credit.toLowerCase().includes(searchText)
         );
         displayCourses(filteredCourses, searchText);
     });
